@@ -9,7 +9,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: fixed;
+    position: absolute;
     padding-top: 0px;
     height: 100px;
     width: 100%;
@@ -21,19 +21,19 @@ body {
 
 .navbar_logo {
     padding-left: 25px;
-    height: 100px;
     display: flex;
     align-items: center;
 }
 
-.logo{
-    height: 100%;
+.logo{ 
+    height: 100px;
     width: auto;
 }
 
 .navlist {
     display: flex;
     list-style: none;
+    position: static;
     margin: 0;
     padding-right: 50px;
     font-weight: bold;

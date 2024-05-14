@@ -1,0 +1,44 @@
+:root {
+    background-color: #E7EFE2;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+}
+  
+.page_logo, .realtalk_head, .realtalk_subhead, .realtalk_paragraph {
+    padding-left: 0;
+}
+
+.realtalk_head {
+    display: block;
+    max-width: 500px;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    margin: auto;
+    float: left;
+    top: 200px;
+}
+  
+.page_logo{
+    height: 200px;
+    display: block;
+    margin-left: auto;
+    float: left;
+}
+  
+.realtalk_subhead{
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+    text-align: left;
+}
+  
+.realtalk_paragraph{
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 30px;
+    color: black;
+    text-align: left;
+    font-size: 25px;
+}

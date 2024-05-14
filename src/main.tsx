@@ -1,10 +1,31 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App'
-import './index.css'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import RealTalk from './components/RealTalk/Realtalk';
+import Homepage from './components/HomePage/Homepage';
+import App from './App';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+export const router = createBrowserRouter([
+  {
+      path: "/",
+      element: <App />,
+      children: [
+          {path: "realtalk", Component: RealTalk },
+          {path: "", Component: Homepage }
+      ]
+  },
+  {
+      path: "/realtalk",
+      element: <RealTalk />
+  }
+])
+
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
+
+root.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <RouterProvider router={router}/>
+  </React.StrictMode>
 )
