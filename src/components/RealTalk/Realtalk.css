@@ -1,5 +1,4 @@
-body{
-    font-family: Arial, Helvetica, sans-serif;
+.body{
     margin: 0;
     padding: 0;
     display: flex;
@@ -9,25 +8,26 @@ body{
 }
 
 .container{
+    font-family: Arial, Helvetica, sans-serif;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; 
+    justify-content: left; 
     align-items: center; 
     width: 100%;
     max-width: 600px;
     height: 100%;
     box-sizing: border-box;
-    gap: 15px
+    gap: 15px;
 }
 
 .square {
-    width: 50%;
+    width: calc(50% - 10px);
     padding-bottom: 50%;
     background-color: aquamarine;
     position: relative;
 }
 
-.test {
+.header1 {
     background-color: brown;
     display: flex;
     place-items: center;
