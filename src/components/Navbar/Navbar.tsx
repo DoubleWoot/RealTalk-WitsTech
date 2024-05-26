@@ -9,7 +9,7 @@ export default function navbar() {
             <Link to= "/"><img className="logo" src={logo_navbar} alt='Home Page'/></Link>
         </div>
         <ul className="navlist">
-            <li><Link to="#">About Us</Link></li>
+            <li><Link to="/about-us">About Us</Link></li>
             <li><Link to="/realtalk">RealTalk</Link></li>
         </ul>
     </header>

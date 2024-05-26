@@ -1,0 +1,44 @@
+.aboutUs_title {
+    margin-top: 100px;
+}
+
+.profile_containers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+.profile_card {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.profile_image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.profile_details {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile_name, .profile_role, p, h1 {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.profile_name {
+    font-size: 25px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.profile_role {
+    font-size: 14px;
+    margin: 0;
+}
