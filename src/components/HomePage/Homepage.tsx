@@ -1,7 +1,10 @@
+import { Link } from 'react-router-dom'
 import './Homepage.css'
 import title_logo from './large_logo_transparent_cropped.png'
 
 export default function Homepage(){
+    const upload_string = "Upload Your Audio Here →";
+
     return (
     <>
         <div className="realtalk_head">
@@ -13,6 +16,9 @@ export default function Homepage(){
                 detection technology, we're committed to safeguarding the 
                 truth for a safer and more honest digital world.</p>
             </div>
+            <Link to="/realtalk">
+                <button className="realtalk_button">{upload_string}</button>
+            </Link>
         </div>
     </>
     )

@@ -48,3 +48,7 @@ body {
     color: black;
     font-size: 20px;
 }
+
+.aboutus_item:hover, .realtalk_item:hover{
+    text-decoration: underline;
+}

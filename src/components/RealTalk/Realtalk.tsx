@@ -30,10 +30,10 @@ export default function RealTalk(){
                     <h2>Upload Your Audio</h2>
                     <input type="file" accept=".wav" onChange={handleFileChange} />
                     {file && <p> Select file: {file.name} </p>}
-                    <button onClick={handleFileUpload}>Upload</button>
+                    <button className="upload_button" onClick={handleFileUpload}>Upload</button>
                 </div>
                 <div className="sqaure file_report">
-                    <h2>Progress Report</h2>
+                    <h2>Authenticity Report</h2>
                 </div>
             </div>
         </div>
