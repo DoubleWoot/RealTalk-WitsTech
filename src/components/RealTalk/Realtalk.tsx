@@ -23,20 +23,18 @@ export default function RealTalk(){
 
     return (
         <>
-        <div>
-            <h1 className="header1">RealTalk</h1>
-            <div className="container">
-                <div className="sqaure file_upload">
-                    <h2>Upload Your Audio</h2>
-                    <input type="file" accept=".wav" onChange={handleFileChange} />
-                    {file && <p> Select file: {file.name} </p>}
-                    <button className="upload_button" onClick={handleFileUpload}>Upload</button>
-                </div>
-                <div className="sqaure file_report">
-                    <h2>Authenticity Report</h2>
-                </div>
+        <h1 className="header1">RealTalk</h1>
+        <div className="container">
+            <div className="file_upload">
+                <h2>Upload Your Audio</h2>
+                <input type="file" accept=".wav" onChange={handleFileChange} />
+                {file && <p> Select file: {file.name} </p>}
+            </div>
+            <div className="file_report">
+                <h2>Authenticity Report</h2>
             </div>
         </div>
+        <button className="upload_button" onClick={handleFileUpload}>Upload</button>
         </>
     )
 }

@@ -19,7 +19,7 @@
     position: relative;
     margin: auto;
     float: left;
-    top: 200px;
+    top: 175px;
 }
   
 .page_logo{
@@ -60,4 +60,13 @@
 
 .realtalk_button:hover{
     background-color: #45cc5d;
+}
+
+.background_image{
+    position: absolute;
+    top: 0;
+    right: 50px;
+    width: auto;
+    height: 100%;
+    z-index: -1;
 }

@@ -1,13 +1,16 @@
 import './AboutUs.css'
-import placeholder from './league.jpg'
+import gymuel from './gymuel.jpg'
+import harold from './harold.png'
+import jonas from './jonas.jpg'
+import josh from './josh.png'
 
 export default function AboutUs(){
 
     const witstechMembers = [
-        {name: "Gymuel De Guzman", role: "Project Manager", imgSrc: placeholder},
-        {name: "Josh Quiogue", role: "Systems Expert", imgSrc: placeholder},
-        {name: "Harold Maralit", role: "Model Engineer", imgSrc: placeholder},
-        {name: "Jonas Balajadia", role: "Dataset Expert", imgSrc: placeholder}
+        {name: "Gymuel De Guzman", role: "Project Manager", imgSrc: gymuel},
+        {name: "Josh Quiogue", role: "Systems Expert", imgSrc: josh},
+        {name: "Harold Maralit", role: "Model Engineer", imgSrc: harold},
+        {name: "Jonas Balajadia", role: "Dataset Expert", imgSrc: jonas}
     ]
 
     return(

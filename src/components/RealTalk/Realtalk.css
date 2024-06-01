@@ -1,48 +1,40 @@
 .container{
     display: flex;
-    justify-content: center;
-    align-items: center;
     font-family: Arial, Helvetica, sans-serif;
     gap: 10px;
-}
-
-.square {
-    width: 200px;
-    height: 200px;
-    padding-bottom: 50%;
-    display: flex;
-    background-color: aquamarine;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 10px;
+    width: 100%;
     box-sizing: border-box;
 }
 
 .header1 {
-    background-color: brown;
+    background-color: cyan;
     display: flex;
     place-items: center;
     margin-top: 100px;
     color: black;
 }
 
+.file_upload, .file_report{
+    text-align: center;
+    width: 50%;
+    height: 500px;
+    margin-top: 10px;
+    padding: 10px;
+}
+
 .file_upload{
     background-color: lightgreen;
-    text-align: center;
 }
 
 .file_report{
     background-color: lightyellow;
-    text-align: center;
 }
 
 .upload_button{
     background-color: #007BFF;
     margin-top: 10px;
-    padding: 10px 20px;
+    padding: 20px 40px;
+    font-size: 20px;
     border: none;
     border-radius: 5px;
     color: white;

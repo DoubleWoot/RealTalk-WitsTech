@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import './Homepage.css'
 import title_logo from './large_logo_transparent_cropped.png'
+import homepage_img from './homepage_image.png'
 
 export default function Homepage(){
     const upload_string = "Upload Your Audio Here →";
@@ -20,6 +21,7 @@ export default function Homepage(){
                 <button className="realtalk_button">{upload_string}</button>
             </Link>
         </div>
+        <img className="background_image" src={homepage_img}/>
     </>
     )
 }
