@@ -1,0 +1,9 @@
+datasets
+transformers
+torch
+numpy
+librosa
+matplotlib 
+pillow 
+scikit-learn 
+pandas
