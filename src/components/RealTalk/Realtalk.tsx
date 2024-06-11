@@ -2,11 +2,17 @@ import { useState } from 'react'
 import './Realtalk.css'
 import axios from 'axios'
 
+
 export default function RealTalk(){
+    {/*Variables*/}
     const [file, setFile] = useState<File | null>(null);
     const [spectrogramUrl, setSpectrogramUrl] = useState<string | null>(null);
     const [showSpectrogram, setShowSpectrogram] = useState<boolean>(false);
+    const [showResult, setShowResult] = useState<string | null>(null);
+    const [showScore, setShowScore] = useState<string | null>(null);
+    
 
+    {/*Checks if the uploaded file is a .wav file*/}
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = event.target.files && event.target.files[0];
         if (selectedFile && selectedFile.type === 'audio/wav'){
@@ -24,15 +30,19 @@ export default function RealTalk(){
 
             try {
                 const response = await axios.post('http://localhost:5000/upload', formData, {
-                    headers: { 
-                        'Content-Type': 'multipart/form-data'
-                    },
-                    responseType: 'blob'
+                    headers: { 'Content-Type': 'multipart/form-data'},
+                    responseType: 'json' //'blob'
                 });
 
-                const imageUrl = URL.createObjectURL(response.data);
-                setSpectrogramUrl(imageUrl);
+                const data = response.data;
+                const base64Image = data.spectrogram_url;
+                const imageBlob = await fetch(`data:image/png;base64,${base64Image}`).then(res => res.blob());
+                const imageUrl = URL.createObjectURL(imageBlob);
+
+                setSpectrogramUrl(imageUrl)
                 setShowSpectrogram(true);
+                setShowResult(data.result)
+                setShowScore(data.score)
             } catch(error) {
                 console.error('Error uploading file: ', error);
             }
@@ -41,7 +51,10 @@ export default function RealTalk(){
 
     return (
         <>
+        {/*Title Header*/}
         <h1 className="header1">RealTalk</h1>
+
+        {/*Left Panel - Upload Audio*/}
         <div className="container">
             <div className="file_upload">
                 <h2>Upload Your Audio</h2>
@@ -49,12 +62,25 @@ export default function RealTalk(){
                 {file && <p> Select file: {file.name} </p>}
                 <button className="upload_button" onClick={handleFileUpload}>Upload</button>
             </div>
+
+        {/*Right Panel - Show spectrogram*/}
             <div className="file_report">
                 <h2>Authenticity Report</h2>
                 {spectrogramUrl && (
                     <div>
                         <h3>Spectrogram</h3>
-                        <img src={spectrogramUrl} alt="The spectrogram" />
+                        <img src={
+                            spectrogramUrl} alt="The spectrogram" />
+                    </div>
+                )}
+                {showResult && (
+                    <div>
+                        <h3>Result: {showResult}</h3>
+                    </div>
+                )}
+                {showResult && (
+                    <div>
+                        <h3>Cofidence Score: {showScore}</h3>
                     </div>
                 )}
             </div>
