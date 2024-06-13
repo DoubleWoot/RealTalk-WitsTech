@@ -1,72 +1,69 @@
 :root {
-    background-color: #E7EFE2;
+  background-color: #e7efe2;
 }
 
-*{
-    padding: 0;
-    margin: 0;
-}
-  
-.page_logo, .realtalk_head, .realtalk_subhead, .realtalk_paragraph {
-    padding-left: 0;
+* {
+  padding: 0;
+  margin: 0;
 }
 
 .realtalk_head {
-    display: block;
-    max-width: 500px;
-    justify-content: flex-start;
-    align-items: center;
-    position: relative;
-    margin: auto;
-    float: left;
-    top: 175px;
+  display: block;
+  max-width: 500px;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  margin: auto;
+  float: left;
+  margin-top: 7rem;
+  padding-left: 2rem;
 }
-  
-.page_logo{
-    height: 200px;
-    display: block;
-    margin-left: auto;
-    float: left;
+
+.page_logo {
+  height: 200px;
+  display: block;
+  margin-left: auto;
+  float: left;
 }
-  
-.realtalk_subhead{
-    font-family: Arial, Helvetica, sans-serif;
-    color: black;
-    text-align: left;
+
+.realtalk_subhead {
+  font-family: Arial, Helvetica, sans-serif;
+  color: black;
+  text-align: left;
 }
-  
-.realtalk_paragraph{
-    font-family: Arial, Helvetica, sans-serif;
-    margin-top: 30px;
-    color: black;
-    text-align: left;
-    font-size: 25px;
+
+.realtalk_paragraph {
+  font-family: Arial, Helvetica, sans-serif;
+  margin-top: 30px;
+  color: black;
+  text-align: left;
+  font-size: 25px;
 }
 
 .realtalk_button {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    background-color: #57ff73;
-    padding: 20px 40px;
-    font-size: 20px;
-    border-radius: 25px;
-    border: none;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  background-color: #5cff77;
+  padding: 20px 40px;
+  font-size: 20px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 20px;
 }
 
-.realtalk_button:hover{
-    background-color: #45cc5d;
+.realtalk_button:hover {
+  background-color: #45cc5d;
 }
 
-.background_image{
-    position: absolute;
-    top: 0;
-    right: 50px;
-    width: auto;
-    height: 100%;
-    z-index: -1;
+.background_image {
+  position: absolute;
+  top: 0;
+  right: 50px;
+  width: auto;
+  height: 100%;
+  z-index: -1;
 }

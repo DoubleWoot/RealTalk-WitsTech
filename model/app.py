@@ -126,7 +126,7 @@ def model_inference(image):
     elif probabilities.argmax().item() == 1:
         result = "Real"
     else:
-        result = "no decision"""
+        result = "no decision"
         
     return (str(round(confidence_score, 2)) + "%", result)
 

@@ -9,8 +9,9 @@ export default function navbar() {
             <Link to= "/"><img className="logo" src={logo_navbar} alt='Home Page'/></Link>
         </div>
         <ul className="navlist">
-            <li className="aboutus_item"><Link to="/about-us">About Us</Link></li>
-            <li className="realtalk_item"><Link to="/realtalk">RealTalk</Link></li>
+            <Link to="/about-us">
+            <button className="aboutus_button">About Us</button>
+            </Link>
         </ul>
     </header>
   )

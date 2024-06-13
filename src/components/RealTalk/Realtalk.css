@@ -1,42 +1,99 @@
-.container{
-    display: flex;
-    font-family: Arial, Helvetica, sans-serif;
-    gap: 10px;
-    width: 100%;
-    box-sizing: border-box;
+.box_container {
+  display: flex;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.header1 {
-    background-color: cyan;
-    display: flex;
-    place-items: center;
-    margin-top: 100px;
-    color: black;
+.file_uploads {
+  margin-left: 0;
+  width: 100%;
+  max-width: 50rem;
+  height: 100rem;
 }
 
-.file_upload, .file_report{
-    text-align: center;
-    width: 50%;
-    height: 500px;
-    margin-top: 10px;
-    padding: 10px;
+.file_upload_box {
+  background-color: azure;
+  margin: 2rem;
+  width: auto;
+  height: 25rem;
+  border-radius: 20px;
+  text-align: center;
+  display: flex;
 }
 
-.file_upload{
-    background-color: lightgreen;
+.file_name_title {
+  padding-left: 3rem;
 }
 
-.file_report{
-    background-color: lightyellow;
+.file_name_container {
+  background-color: azure;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  height: 3rem;
+  width: auto;
+  border-radius: 20px;
+  align-items: center;
+  display: flex;
 }
 
-.upload_button{
-    background-color: #007BFF;
-    margin-top: 10px;
-    padding: 20px 40px;
-    font-size: 20px;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
+.file_playhead_title {
+  margin-top: 2rem;
+  padding-left: 3rem;
+}
+
+.file_playhead {
+  background-color: azure;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  height: 3rem;
+  width: auto;
+  border-radius: 20px;
+}
+
+.upload_button {
+  display: block;
+  margin: 3rem auto;
+  padding: 20px 40px;
+  font-size: 20px;
+  border: none;
+  border-radius: 20px;
+  background-color: #5cff77;
+  color: black;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+}
+
+.upload_button:hover {
+  background-color: #45cc5d;
+}
+
+.file_reports {
+  background-color: white;
+  width: 100%;
+}
+
+.file_report_title {
+  padding-top: 2rem;
+  padding-left: 2rem;
+}
+
+.spectrogram_image {
+  background-color: gray;
+  height: 30rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-bottom: 2rem;
+}
+
+.result_container {
+  padding-left: 2rem;
+  display: flex;
+  gap: 40px;
+}
+
+.confidence_container {
+  margin-top: 1rem;
+  padding-left: 2rem;
+  display: flex;
+  gap: 40px;
 }

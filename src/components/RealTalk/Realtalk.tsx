@@ -1,90 +1,138 @@
-import { useState } from 'react'
-import './Realtalk.css'
-import axios from 'axios'
+import { useRef, useState } from "react";
+import "./Realtalk.css";
+import axios from "axios";
 
+export default function RealTalk() {
+  {
+    /*Variables*/
+  }
+  const [file, setFile] = useState<File | null>(null);
+  const [spectrogramUrl, setSpectrogramUrl] = useState<string | null>(null);
+  const [showSpectrogram, setShowSpectrogram] = useState<boolean>(false);
+  const [showResult, setShowResult] = useState<string | null>(null);
+  const [showScore, setShowScore] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-export default function RealTalk(){
-    {/*Variables*/}
-    const [file, setFile] = useState<File | null>(null);
-    const [spectrogramUrl, setSpectrogramUrl] = useState<string | null>(null);
-    const [showSpectrogram, setShowSpectrogram] = useState<boolean>(false);
-    const [showResult, setShowResult] = useState<string | null>(null);
-    const [showScore, setShowScore] = useState<string | null>(null);
-    
+  {
+    /*Checks if the uploaded file is a .wav file*/
+  }
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files && event.target.files[0];
+    if (selectedFile && selectedFile.type === "audio/wav") {
+      setFile(selectedFile);
+    } else {
+      alert("Please upload a .wav file");
+    }
+  };
 
-    {/*Checks if the uploaded file is a .wav file*/}
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const selectedFile = event.target.files && event.target.files[0];
-        if (selectedFile && selectedFile.type === 'audio/wav'){
-            setFile(selectedFile);
-        } else {
-            alert("Please upload a .wav file");
-        }
-    };
+  const handleFileUpload = async () => {
+    if (file) {
+      const formData = new FormData();
+      console.log("File uploaded", file.name);
+      formData.append("file", file);
 
-    const handleFileUpload = async () => {
-        if (file) {
-            const formData = new FormData();
-            console.log('File uploaded', file.name);
-            formData.append('file', file);
+      try {
+        const response = await axios.post(
+          "http://localhost:5000/upload",
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+            responseType: "json", //'blob'
+          }
+        );
 
-            try {
-                const response = await axios.post('http://localhost:5000/upload', formData, {
-                    headers: { 'Content-Type': 'multipart/form-data'},
-                    responseType: 'json' //'blob'
-                });
+        const data = response.data;
+        const base64Image = data.spectrogram_url;
+        const imageBlob = await fetch(
+          `data:image/png;base64,${base64Image}`
+        ).then((res) => res.blob());
+        const imageUrl = URL.createObjectURL(imageBlob);
 
-                const data = response.data;
-                const base64Image = data.spectrogram_url;
-                const imageBlob = await fetch(`data:image/png;base64,${base64Image}`).then(res => res.blob());
-                const imageUrl = URL.createObjectURL(imageBlob);
+        setSpectrogramUrl(imageUrl);
+        setShowSpectrogram(true);
+        setShowResult(data.result);
+        setShowScore(data.score);
+      } catch (error) {
+        console.error("Error uploading file: ", error);
+      }
+    }
+  };
 
-                setSpectrogramUrl(imageUrl)
-                setShowSpectrogram(true);
-                setShowResult(data.result)
-                setShowScore(data.score)
-            } catch(error) {
-                console.error('Error uploading file: ', error);
-            }
-        }
-    };
+  const handleBoxClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
 
-    return (
-        <>
-        {/*Title Header*/}
-        <h1 className="header1">RealTalk</h1>
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
 
-        {/*Left Panel - Upload Audio*/}
-        <div className="container">
-            <div className="file_upload">
-                <h2>Upload Your Audio</h2>
-                <input type="file" accept=".wav" onChange={handleFileChange} />
-                {file && <p> Select file: {file.name} </p>}
-                <button className="upload_button" onClick={handleFileUpload}>Upload</button>
-            </div>
+    const selectedFile =
+      event.dataTransfer.files && event.dataTransfer.files[0];
+    if (selectedFile && selectedFile.type === "audio/wav") {
+      setFile(selectedFile);
+    } else {
+      alert("Please upload a .wav file only.");
+    }
+  };
 
-        {/*Right Panel - Show spectrogram*/}
-            <div className="file_report">
-                <h2>Authenticity Report</h2>
-                {spectrogramUrl && (
-                    <div>
-                        <h3>Spectrogram</h3>
-                        <img src={
-                            spectrogramUrl} alt="The spectrogram" />
-                    </div>
-                )}
-                {showResult && (
-                    <div>
-                        <h3>Result: {showResult}</h3>
-                    </div>
-                )}
-                {showResult && (
-                    <div>
-                        <h3>Cofidence Score: {showScore}</h3>
-                    </div>
-                )}
-            </div>
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
+  return (
+    <>
+      <div className="box_container">
+        <div className="file_uploads">
+          <div
+            className="file_upload_box"
+            onClick={handleBoxClick}
+            onDrop={handleDrop}
+            onDragOver={handleDragOver}
+          >
+            <h2>Drag your Speech Audio File...</h2>
+            <input
+              type="file"
+              id="file-input"
+              accept=".wav"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              style={{ display: "none" }}
+            />
+          </div>
+          <h3 className="file_name_title">FILE NAME</h3>
+          <div className="file_name_container">
+            {file && <h3 className="file_name"> {file.name} </h3>}
+          </div>
+          <h3 className="file_playhead_title">PLAYHEAD</h3>
+          <div className="file_playhead">
+            {/*To add a playhead for the audio*/}
+          </div>
+          <button className="upload_button" onClick={handleFileUpload}>
+            Generate Authenticity Report
+          </button>
         </div>
-        </>
-    )
+        <div className="file_reports">
+          <h1 className="file_report_title">Mel-Sepctrogram Conversion</h1>
+          <div className="spectrogram_image">
+            {spectrogramUrl && (
+              <img src={spectrogramUrl} alt="The Spectrogram" />
+            )}
+          </div>
+          <div className="result_container">
+            <h1 className="result_title">Result:</h1>
+            {showResult && <h1>{showResult}</h1>}
+            {/*To add if its fake or nah*/}
+          </div>
+          <div className="confidence_container">
+            <h2 className="confidence_title">Confidence Score:</h2>
+            {showResult && <h3>{showScore}</h3>}
+            {/*To add confidence score*/}
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
