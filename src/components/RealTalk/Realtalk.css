@@ -18,6 +18,9 @@
   border-radius: 20px;
   text-align: center;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px dashed;
 }
 
 .file_name_title {
@@ -33,6 +36,7 @@
   border-radius: 20px;
   align-items: center;
   display: flex;
+  padding-left: 2rem;
 }
 
 .file_playhead_title {
@@ -77,12 +81,19 @@
   padding-left: 2rem;
 }
 
-.spectrogram_image {
+.spectrogram_box {
   background-color: gray;
-  height: 30rem;
+  height: 35rem;
   margin-left: 2rem;
   margin-right: 2rem;
   margin-bottom: 2rem;
+  border-radius: 20px;
+}
+
+.spectrogram_image {
+  border-radius: 20px;
+  width: 100%;
+  height: 35rem;
 }
 
 .result_container {

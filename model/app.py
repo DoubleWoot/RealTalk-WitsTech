@@ -29,6 +29,15 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATA_FOLDER = os.path.join(BASE_DIR, 'data')
 os.makedirs(DATA_FOLDER, exist_ok=True)
 
+def clean_data_folder():
+    for filename in os.listdir(DATA_FOLDER):
+        file_path = os.path.join(DATA_FOLDER, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+        except Exception as e:
+            print(f'Failed to delete {file_path}. Reason: {e}') 
+
 @app.route('/')
 def index():
     return "Flask Server is running."
@@ -48,6 +57,8 @@ def upload_file():
         return jsonify({'error': 'No selected file'}), 400
     
     if file and file.filename.endswith('.wav'):
+        clean_data_folder()
+        
         timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
         filename = f"audio_{timestamp}.wav"
         filepath = os.path.join(DATA_FOLDER, filename)

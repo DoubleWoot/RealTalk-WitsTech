@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./Realtalk.css";
 import axios from "axios";
 
@@ -12,6 +12,8 @@ export default function RealTalk() {
   const [showResult, setShowResult] = useState<string | null>(null);
   const [showScore, setShowScore] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   {
     /*Checks if the uploaded file is a .wav file*/
@@ -20,6 +22,7 @@ export default function RealTalk() {
     const selectedFile = event.target.files && event.target.files[0];
     if (selectedFile && selectedFile.type === "audio/wav") {
       setFile(selectedFile);
+      setAudioUrl(URL.createObjectURL(selectedFile));
     } else {
       alert("Please upload a .wav file");
     }
@@ -72,6 +75,7 @@ export default function RealTalk() {
       event.dataTransfer.files && event.dataTransfer.files[0];
     if (selectedFile && selectedFile.type === "audio/wav") {
       setFile(selectedFile);
+      setAudioUrl(URL.createObjectURL(selectedFile));
     } else {
       alert("Please upload a .wav file only.");
     }
@@ -81,6 +85,12 @@ export default function RealTalk() {
     event.preventDefault();
     event.stopPropagation();
   };
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.load();
+    }
+  }, [audioUrl]);
 
   return (
     <>
@@ -92,7 +102,11 @@ export default function RealTalk() {
             onDrop={handleDrop}
             onDragOver={handleDragOver}
           >
-            <h2>Drag your Speech Audio File...</h2>
+            <h2>
+              {file
+                ? "Upload Another File Here..."
+                : "Drag Your Speech Audio File..."}
+            </h2>
             <input
               type="file"
               id="file-input"
@@ -108,7 +122,12 @@ export default function RealTalk() {
           </div>
           <h3 className="file_playhead_title">PLAYHEAD</h3>
           <div className="file_playhead">
-            {/*To add a playhead for the audio*/}
+            {audioUrl && (
+              <audio controls ref={audioRef} style={{ width: "100%" }}>
+                <source src={audioUrl} type="audio/wav" />
+                Your browser does not support this audio element.
+              </audio>
+            )}
           </div>
           <button className="upload_button" onClick={handleFileUpload}>
             Generate Authenticity Report
@@ -116,9 +135,13 @@ export default function RealTalk() {
         </div>
         <div className="file_reports">
           <h1 className="file_report_title">Mel-Sepctrogram Conversion</h1>
-          <div className="spectrogram_image">
+          <div className="spectrogram_box">
             {spectrogramUrl && (
-              <img src={spectrogramUrl} alt="The Spectrogram" />
+              <img
+                className="spectrogram_image"
+                src={spectrogramUrl}
+                alt="The Spectrogram"
+              />
             )}
           </div>
           <div className="result_container">
