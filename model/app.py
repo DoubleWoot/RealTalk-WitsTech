@@ -19,7 +19,7 @@ import base64
 app = Flask(__name__)
 CORS(app, resources={r"/upload": {"origins": "http://localhost:5173"}})
 
-model_id = "Anthuni/thesis_model"
+model_id = "Anthuni/Final_Thesis_Model"
 token = "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"     
 
 model = ViTForImageClassification.from_pretrained(model_id, token=token)

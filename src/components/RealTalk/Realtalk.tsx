@@ -156,6 +156,9 @@ export default function RealTalk() {
           </div>
         </div>
       </div>
+      <div className="desc_box">
+        <h1>RULES</h1>
+      </div>
     </>
   );
 }
