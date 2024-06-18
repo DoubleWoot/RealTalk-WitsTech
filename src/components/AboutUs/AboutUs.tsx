@@ -15,7 +15,7 @@ export default function AboutUs() {
   return (
     <>
       <div>
-        <h1 className="aboutus_title">About Us</h1>
+        <h1 className="aboutus_title">Our Team Members</h1>
         <div className="profile_containers">
           {witstechMembers.map((witstechMembers, index) => (
             <div key={index} className="profile_card">

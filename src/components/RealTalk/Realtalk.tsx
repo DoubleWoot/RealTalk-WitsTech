@@ -11,6 +11,7 @@ export default function RealTalk() {
   const [showSpectrogram, setShowSpectrogram] = useState<boolean>(false);
   const [showResult, setShowResult] = useState<string | null>(null);
   const [showScore, setShowScore] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -21,8 +22,7 @@ export default function RealTalk() {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files && event.target.files[0];
     if (selectedFile && selectedFile.type === "audio/wav") {
-      setFile(selectedFile);
-      setAudioUrl(URL.createObjectURL(selectedFile));
+      checkAudioDuration(selectedFile);
     } else {
       alert("Please upload a .wav file");
     }
@@ -33,6 +33,7 @@ export default function RealTalk() {
       const formData = new FormData();
       console.log("File uploaded", file.name);
       formData.append("file", file);
+      setIsLoading(true);
 
       try {
         const response = await axios.post(
@@ -57,6 +58,8 @@ export default function RealTalk() {
         setShowScore(data.score);
       } catch (error) {
         console.error("Error uploading file: ", error);
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -74,8 +77,7 @@ export default function RealTalk() {
     const selectedFile =
       event.dataTransfer.files && event.dataTransfer.files[0];
     if (selectedFile && selectedFile.type === "audio/wav") {
-      setFile(selectedFile);
-      setAudioUrl(URL.createObjectURL(selectedFile));
+      checkAudioDuration(selectedFile);
     } else {
       alert("Please upload a .wav file only.");
     }
@@ -84,6 +86,20 @@ export default function RealTalk() {
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.stopPropagation();
+  };
+
+  const checkAudioDuration = (selectedFile: File) => {
+    const audio = new Audio(URL.createObjectURL(selectedFile));
+    audio.addEventListener("loadedmetadata", () => {
+      if (audio.duration > 15) {
+        alert(
+          "The audio file is over 15 seconds. Please upload a shorter audio file."
+        );
+      } else {
+        setFile(selectedFile);
+        setAudioUrl(URL.createObjectURL(selectedFile));
+      }
+    });
   };
 
   useEffect(() => {
@@ -134,30 +150,86 @@ export default function RealTalk() {
           </button>
         </div>
         <div className="file_reports">
-          <h1 className="file_report_title">Mel-Sepctrogram Conversion</h1>
+          <h1 className="file_report_title">Mel-Spectrogram Conversion</h1>
           <div className="spectrogram_box">
-            {spectrogramUrl && (
-              <img
-                className="spectrogram_image"
-                src={spectrogramUrl}
-                alt="The Spectrogram"
-              />
+            {isLoading ? (
+              <h2>Mel-Spectrogram is Generating...</h2>
+            ) : (
+              spectrogramUrl && (
+                <img
+                  className="spectrogram_image"
+                  src={spectrogramUrl}
+                  alt="The Spectrogram"
+                />
+              )
             )}
           </div>
           <div className="result_container">
             <h1 className="result_title">Result:</h1>
             {showResult && <h1>{showResult}</h1>}
-            {/*To add if its fake or nah*/}
           </div>
           <div className="confidence_container">
             <h2 className="confidence_title">Confidence Score:</h2>
             {showResult && <h3>{showScore}</h3>}
-            {/*To add confidence score*/}
           </div>
         </div>
       </div>
-      <div className="desc_box">
-        <h1>RULES</h1>
+      <div className="guide_container">
+        <h1>User Guide</h1>
+        <div className="guide_inner_container">
+          <div className="guide_item">
+            <h2>Upload Audio</h2>
+            <p>
+              Users can upload or drop their audio files directly onto the
+              platform, supporting commonly used WAV format, making it
+              accessible for a variety of Tagalog audio content.
+            </p>
+          </div>
+          <div className="guide_item">
+            <h2>Audio Preprocessing</h2>
+            <p>
+              User-submitted audio data will then undergo a series of
+              preprocessing to convert audio format into a visual format through
+              a log-mel spectrogram.
+            </p>
+          </div>
+          <div className="guide_item">
+            <h2>Authenticity Report</h2>
+            <p>
+              RealTalk generates and prompts its processing results, recognizing
+              deepfake audio in the Tagalog language, in a simple and digestible
+              format.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="limitations_container">
+        <h1>Limitations</h1>
+        <p>
+          Note that there are certain limitations and requirements that should
+          be met for smooth use of the system and to generate more reliable
+          results
+        </p>
+        <div className="limitations_inner_container">
+          <div className="limitations_item">
+            <p>
+              Audio files submitted must<strong> be at most 5MB</strong>
+            </p>
+          </div>
+          <div className="limitations_item">
+            <p>
+              Desirable length of audio data submitted is
+              <strong> 15 seconds and below</strong>
+            </p>
+          </div>
+          <div className="limitations_item">
+            <p>
+              The system has
+              <strong> no control over noise and variance in volume </strong>
+              that may hinder and affect its authentication.
+            </p>
+          </div>
+        </div>
       </div>
     </>
   );
