@@ -37,7 +37,7 @@ export default function RealTalk() {
 
       try {
         const response = await axios.post(
-          "http://localhost:5000/upload",
+          `${import.meta.env.VITE_BASEURL}/upload`,
           formData,
           {
             headers: { "Content-Type": "multipart/form-data" },

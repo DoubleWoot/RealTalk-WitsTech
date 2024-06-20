@@ -14,7 +14,7 @@ from io import BytesIO
 import base64
 
 app = Flask(__name__)
-# CORS(app, resources={r"/upload": {"origins": "http://localhost:5173"}})
+#CORS(app, resources={r"/upload": {"origins": "http://localhost:5173"}})
 CORS(app)
 
 model_id = "Anthuni/Final_Thesis_Model"
