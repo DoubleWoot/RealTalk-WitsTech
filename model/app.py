@@ -1,9 +1,6 @@
-from flask import Flask, request, jsonify, send_file, make_response
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
-import nbformat
-from nbconvert.preprocessors import ExecutePreprocessor
-from werkzeug.utils import secure_filename
 from datetime import datetime
 from transformers import ViTForImageClassification, ViTFeatureExtractor
 import torch
@@ -17,7 +14,8 @@ from io import BytesIO
 import base64
 
 app = Flask(__name__)
-CORS(app, resources={r"/upload": {"origins": "http://localhost:5173"}})
+# CORS(app, resources={r"/upload": {"origins": "http://localhost:5173"}})
+CORS(app)
 
 model_id = "Anthuni/Final_Thesis_Model"
 token = "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"     
@@ -66,7 +64,7 @@ def upload_file():
         
         try:
             #Preprocess the uploaded file
-            output_path = process_wav_to_spec(filepath)
+            output_path = preprocessor(filepath)
 
             #open the saved file
             image = Image.open(output_path)
@@ -93,36 +91,20 @@ def upload_file():
             return jsonify({'error': str(e)}), 500
         
     return jsonify({'error': 'File type not allowed'}), 400
-
-def process_wav_to_spec(filepath):
-    notebook_path = os.path.join(BASE_DIR, 'Wav2Spec.ipynb')
     
+def preprocessor(filepath):
     try:
-        with open(notebook_path) as f:
-            nb = nbformat.read(f, as_version=4)
-        ep = ExecutePreprocessor(timeout=600, kernel_name='python3')
-
-        ##Set directory to save the image
+        import wav_to_spec as to_spec
         output_image_path = os.path.splitext(filepath)[0] + '_spectrogram.png'
-
-        ##Add new code in the Jupyter notebook
-        #(to load the uploaded file in the notebook)
-        newcell = nbformat.v4.new_code_cell(f"""
-        img = wav2melspec(r"{filepath}")                       
-        img.save(r"{output_image_path}")      
-        """)
-
-        nb.cells.append(newcell)
-        ep.preprocess(nb, {'metadata': {'path': './'}})
-    
-        if not os.path.exists(output_image_path):
-            raise FileNotFoundError(f"Output image {output_image_path} not created.")
+        img = to_spec.wav2melspec(filepath)
+        img.save(output_image_path)
         
         return output_image_path
-    
     except Exception as e:
-        print(f"Error executing notebook: {e}")
+        print(f"Error {e}")
         raise
+
+    
 
 def model_inference(image):
     inputs = feature_extractor(images=image, return_tensors="pt")
