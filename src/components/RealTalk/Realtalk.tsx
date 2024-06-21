@@ -37,7 +37,7 @@ export default function RealTalk() {
 
       try {
         const response = await axios.post(
-          "http://GymNotWell.pythonanywhere.com/upload",
+          "https://GymNotWell.pythonanywhere.com/upload",
           formData,
           {
             headers: { "Content-Type": "multipart/form-data" },
