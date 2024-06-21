@@ -235,28 +235,27 @@ export default function RealTalk() {
           <div className="limitations_item">
             <img className="limit_icon" src={filesize_icon} />
             <p>
-              Audio files submitted must<u> be at most 5MB</u>
+              Audio files submitted must <u>be at most 5MB</u>.
             </p>
           </div>
           <div className="limitations_item">
             <img className="limit_icon" src={seconds_icon} />
             <p>
-              Desirable length of audio data submitted is
-              <u> 15 seconds and below</u>
+              Desirable length of audio data submitted is{" "}
+              <u>15 seconds and below</u>.
             </p>
           </div>
           <div className="limitations_item">
             <img className="limit_icon" src={audio_icon} />
             <p>
-              The system has
-              <u> no control over noise and variance in volume </u>
+              The system has <u>no control over noise and variance in volume</u>{" "}
               that may hinder and affect its authentication.
             </p>
           </div>
           <div className="limitations_item">
             <img className="limit_icon" src={speech_icon} />
             <p>
-              <u>Tagalog speech only. </u> The system cannot properly detect for
+              <u>Tagalog speech only</u>. The system cannot properly detect for
               singing, and other languages.
             </p>
           </div>
