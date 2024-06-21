@@ -2,9 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
 from datetime import datetime
-from transformers import ViTForImageClassification, ViTFeatureExtractor
-import torch
-import torch.nn.functional as F
+import requests
 
 #For opening images
 from PIL import Image
@@ -14,14 +12,12 @@ from io import BytesIO
 import base64
 
 app = Flask(__name__)
-#CORS(app, resources={r"/upload": {"origins": "http://localhost:5173"}})
+# CORS(app, resources={r"/upload": {"origins": "http://localhost:5173"}})
 CORS(app)
 
-model_id = "Anthuni/Final_Thesis_Model"
-token = "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"     
 
-model = ViTForImageClassification.from_pretrained(model_id, token=token)
-feature_extractor = ViTFeatureExtractor.from_pretrained(model_id, token=token)
+API_URL = "https://api-inference.huggingface.co/models/Anthuni/Final_Thesis_Model"
+headers = {"Authorization": "Bearer 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"}
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATA_FOLDER = os.path.join(BASE_DIR, 'data')
@@ -75,8 +71,8 @@ def upload_file():
             spectrogram_base64 = base64.b64encode(buffered.getvalue()).decode('utf-8')
 
             #Run the file through the model to get the decision
-            score, result = model_inference(image)
-
+            score, result = model_inference(output_path)         
+            
             #Create a JSON object to be returned and parsed in the client side
             response = {
                 'spectrogram_url': spectrogram_base64,
@@ -104,24 +100,24 @@ def preprocessor(filepath):
         print(f"Error {e}")
         raise
 
+
+def model_inference(filename):
+    with open(filename, "rb") as f:
+        data = f.read()
+    response = requests.post(API_URL, headers=headers, data=data)
+    postresult = response.json()
     
-
-def model_inference(image):
-    inputs = feature_extractor(images=image, return_tensors="pt")
-    with torch.no_grad():
-        logits = model(**inputs).logits
-
-    probabilities = F.softmax(logits, dim=-1)
-    confidence_score = probabilities.max().item() * 100
-
-    if probabilities.argmax().item() == 0:
+    if postresult[0]["score"] > postresult[1]["score"]:
+        score = postresult[0]["score"]
         result = "Fake"
-    elif probabilities.argmax().item() == 1:
+    elif postresult[1]["score"] > postresult[0]["score"]:
+        score = postresult[1]["score"]
         result = "Real"
     else:
         result = "no decision"
-        
-    return (str(round(confidence_score, 2)) + "%", result)
+    
+    return (str(round(score*100, 2)) + "%", result)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

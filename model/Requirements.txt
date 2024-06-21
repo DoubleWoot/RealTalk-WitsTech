@@ -1,11 +1,8 @@
-datasets
-transformers
-torch
 numpy
 librosa
+pillow
 matplotlib 
-pillow 
-scikit-learn 
-pandas
 flask
 flask_cors
+typing-extensions==3.*
+arviz
