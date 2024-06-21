@@ -1,6 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import "./Realtalk.css";
 import axios from "axios";
+import upload_icon from "./upload_icon.png";
+import spec_icon from "./spec_icon.png";
+import report_icon from "./report_icon.png";
+import filesize_icon from "./filesize_icon.png";
+import seconds_icon from "./seconds_icon.png";
+import speech_icon from "./speech_icon.png";
+import audio_icon from "./audio_icon.png";
+import gear_loading from "./gear_loading.gif";
 
 export default function RealTalk() {
   {
@@ -22,7 +30,11 @@ export default function RealTalk() {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files && event.target.files[0];
     if (selectedFile && selectedFile.type === "audio/wav") {
-      checkAudioDuration(selectedFile);
+      if (selectedFile.size > 5 * 1024 * 1024) {
+        alert("The system does not allow .wav files that are over 5MB.");
+      } else {
+        checkAudioDuration(selectedFile);
+      }
     } else {
       alert("Please upload a .wav file");
     }
@@ -30,6 +42,8 @@ export default function RealTalk() {
 
   const handleFileUpload = async () => {
     if (file) {
+      setShowResult(null);
+      setShowScore(null);
       const formData = new FormData();
       console.log("File uploaded", file.name);
       formData.append("file", file);
@@ -77,7 +91,11 @@ export default function RealTalk() {
     const selectedFile =
       event.dataTransfer.files && event.dataTransfer.files[0];
     if (selectedFile && selectedFile.type === "audio/wav") {
-      checkAudioDuration(selectedFile);
+      if (selectedFile.size > 5 * 1024 * 1024) {
+        alert("The system does not allow .wav files that are over 5MB.");
+      } else {
+        checkAudioDuration(selectedFile);
+      }
     } else {
       alert("Please upload a .wav file only.");
     }
@@ -153,7 +171,7 @@ export default function RealTalk() {
           <h1 className="file_report_title">Mel-Spectrogram Conversion</h1>
           <div className="spectrogram_box">
             {isLoading ? (
-              <h2>Mel-Spectrogram is Generating...</h2>
+              <img src={gear_loading} />
             ) : (
               spectrogramUrl && (
                 <img
@@ -170,7 +188,7 @@ export default function RealTalk() {
           </div>
           <div className="confidence_container">
             <h2 className="confidence_title">Confidence Score:</h2>
-            {showResult && <h3>{showScore}</h3>}
+            {showResult && <h2>{showScore}</h2>}
           </div>
         </div>
       </div>
@@ -178,6 +196,7 @@ export default function RealTalk() {
         <h1>User Guide</h1>
         <div className="guide_inner_container">
           <div className="guide_item">
+            <img className="user_guide_icon" src={upload_icon} />
             <h2>Upload Audio</h2>
             <p>
               Users can upload or drop their audio files directly onto the
@@ -186,6 +205,7 @@ export default function RealTalk() {
             </p>
           </div>
           <div className="guide_item">
+            <img className="user_guide_icon" src={spec_icon} />
             <h2>Audio Preprocessing</h2>
             <p>
               User-submitted audio data will then undergo a series of
@@ -194,6 +214,7 @@ export default function RealTalk() {
             </p>
           </div>
           <div className="guide_item">
+            <img className="user_guide_icon" src={report_icon} />
             <h2>Authenticity Report</h2>
             <p>
               RealTalk generates and prompts its processing results, recognizing
@@ -212,21 +233,31 @@ export default function RealTalk() {
         </p>
         <div className="limitations_inner_container">
           <div className="limitations_item">
+            <img className="limit_icon" src={filesize_icon} />
             <p>
-              Audio files submitted must<strong> be at most 5MB</strong>
+              Audio files submitted must<u> be at most 5MB</u>
             </p>
           </div>
           <div className="limitations_item">
+            <img className="limit_icon" src={seconds_icon} />
             <p>
               Desirable length of audio data submitted is
-              <strong> 15 seconds and below</strong>
+              <u> 15 seconds and below</u>
             </p>
           </div>
           <div className="limitations_item">
+            <img className="limit_icon" src={audio_icon} />
             <p>
               The system has
-              <strong> no control over noise and variance in volume </strong>
+              <u> no control over noise and variance in volume </u>
               that may hinder and affect its authentication.
+            </p>
+          </div>
+          <div className="limitations_item">
+            <img className="limit_icon" src={speech_icon} />
+            <p>
+              <u>Tagalog speech only. </u> The system cannot properly detect for
+              singing, and other languages.
             </p>
           </div>
         </div>

@@ -105,20 +105,20 @@
 .result_container {
   padding-left: 2rem;
   display: flex;
-  gap: 40px;
+  gap: 2rem;
 }
 
 .confidence_container {
   margin-top: 1rem;
   padding-left: 2rem;
   display: flex;
-  gap: 40px;
+  gap: 2rem;
 }
 
 .guide_container {
-  background-color: #aed199;
+  background-color: white;
   width: 100%;
-  height: 26rem;
+  height: 30rem;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -136,7 +136,7 @@
 
 .guide_item {
   flex: 1;
-  height: 12rem;
+  height: 19rem;
   max-width: 25rem;
 }
 
@@ -156,10 +156,12 @@
 
 .limitations_container {
   width: 100%;
-  height: 20rem;
+  height: 28rem;
   text-align: center;
   padding-top: 2rem;
   padding-bottom: 2rem;
+  background-color: #385723;
+  color: white;
 }
 
 .limitations_container p {
@@ -181,6 +183,17 @@
 }
 
 .limitations_inner_container p {
-  padding: 2rem;
+  padding: 1rem;
   font-size: 23px;
+}
+
+.user_guide_icon {
+  height: 100px;
+  width: auto;
+  padding-bottom: 1rem;
+}
+
+.limit_icon {
+  height: 150px;
+  width: auto;
 }

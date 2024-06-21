@@ -6,7 +6,9 @@ export default function footer() {
       <p>
         &copy; 2024 <strong>RealTalk</strong>. All Rights Reserved
       </p>
-      <p>Developed by Wit's Tech</p>
+      <p>
+        <strong>For research purposes only.</strong>
+      </p>
     </footer>
   );
 }
