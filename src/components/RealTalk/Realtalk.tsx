@@ -9,6 +9,7 @@ import seconds_icon from "./seconds_icon.png";
 import speech_icon from "./speech_icon.png";
 import audio_icon from "./audio_icon.png";
 import gear_loading from "./gear_loading.gif";
+import feedback_icon from "./feedback_icon.png";
 
 export default function RealTalk() {
   {
@@ -150,6 +151,14 @@ export default function RealTalk() {
               style={{ display: "none" }}
             />
           </div>
+          <p
+            className="convert_warning"
+            onClick={() => {
+              window.open("https://audio-convert.com", "_blank");
+            }}
+          >
+            (?) Click here for a .wav converter
+          </p>
           <h3 className="file_name_title">FILE NAME</h3>
           <div className="file_name_container">
             {file && <h3 className="file_name"> {file.name} </h3>}
@@ -259,6 +268,25 @@ export default function RealTalk() {
               singing, and other languages.
             </p>
           </div>
+        </div>
+      </div>
+      <div className="feedback_container">
+        <h1>Feedback</h1>
+        <div className="feedback_inner_container">
+          <img
+            className="feedback_icon"
+            src={feedback_icon}
+            onClick={() =>
+              window.open(
+                "https://docs.google.com/forms/d/e/1FAIpQLSd-wrHB4fLb5DweKcjTlsIxadta3mqyC0DpncTZwLK6CRBb-g/viewform",
+                "_blank"
+              )
+            }
+          />
+          <p>
+            Want to send us feedback? Click on the icon above to submit your
+            thoughts!
+          </p>
         </div>
       </div>
     </>
