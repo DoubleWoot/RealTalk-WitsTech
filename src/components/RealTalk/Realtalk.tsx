@@ -1,13 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./Realtalk.css";
 import axios from "axios";
-import upload_icon from "./upload_icon.png";
-import spec_icon from "./spec_icon.png";
-import report_icon from "./report_icon.png";
-import filesize_icon from "./filesize_icon.png";
-import seconds_icon from "./seconds_icon.png";
-import speech_icon from "./speech_icon.png";
-import audio_icon from "./audio_icon.png";
 import gear_loading from "./gear_loading.gif";
 import feedback_icon from "./feedback_icon.png";
 
@@ -110,7 +103,7 @@ export default function RealTalk() {
   const checkAudioDuration = (selectedFile: File) => {
     const audio = new Audio(URL.createObjectURL(selectedFile));
     audio.addEventListener("loadedmetadata", () => {
-      if (audio.duration > 15) {
+      if (audio.duration > 16) {
         alert(
           "The audio file is over 15 seconds. Please upload a shorter audio file."
         );
@@ -201,71 +194,48 @@ export default function RealTalk() {
           </div>
         </div>
       </div>
-      <div className="guide_container">
-        <h1>User Guide</h1>
-        <div className="guide_inner_container">
-          <div className="guide_item">
-            <img className="user_guide_icon" src={upload_icon} />
-            <h2>Upload Audio</h2>
+      <div className="operation_container">
+        <h1>How RealTalk Works</h1>
+        <div className="operation_inner_container">
+          <div className="operation_item">
+            <h2>Audio Preprocessing:</h2>
             <p>
-              Users can upload or drop their audio files directly onto the
-              platform, supporting commonly used WAV format, making it
-              accessible for a variety of Tagalog audio content.
+              RealTalk transforms audio signals into spectrograms, visual
+              representations of sound frequencies over time, allowing the use
+              of Vision Transformers (ViTs) for audio analysis. The spectrogram
+              is divided into smaller patches to capture the audio's frequency
+              and temporal features.
             </p>
           </div>
-          <div className="guide_item">
-            <img className="user_guide_icon" src={spec_icon} />
-            <h2>Audio Preprocessing</h2>
+          <div className="operation_item">
+            <h2>Vision Transformer (ViT) Application:</h2>
             <p>
-              User-submitted audio data will then undergo a series of
-              preprocessing to convert audio format into a visual format through
-              a log-mel spectrogram.
+              Each spectrogram patch is treated as a token, embedded into a
+              higher-dimensional space with added positional information. The
+              attention mechanism in ViTs focuses on the relationships between
+              audio snippets, capturing nuances and dependencies crucial for
+              identifying deepfake manipulations.
             </p>
           </div>
-          <div className="guide_item">
-            <img className="user_guide_icon" src={report_icon} />
-            <h2>Authenticity Report</h2>
+          <div className="operation_item">
+            <h2>Feature Extraction and Analysis:</h2>
             <p>
-              RealTalk generates and prompts its processing results, recognizing
-              deepfake audio in the Tagalog language, in a simple and digestible
-              format.
+              RealTalk utilizes multiple transformer layers to analyze
+              spectrogram patches, extracting detailed features and identifying
+              inconsistencies and unnatural patterns typical of deepfake audio.
+              The system detects subtle anomalies like irregular pitch,
+              frequency shifts, and inconsistencies in speech rhythm and tone.
             </p>
           </div>
-        </div>
-      </div>
-      <div className="limitations_container">
-        <h1>Limitations</h1>
-        <p>
-          Note that there are certain limitations and requirements that should
-          be met for smooth use of the system and to generate more reliable
-          results
-        </p>
-        <div className="limitations_inner_container">
-          <div className="limitations_item">
-            <img className="limit_icon" src={filesize_icon} />
+          <div className="operation_item">
+            <h2>Decision Making:</h2>
             <p>
-              Audio files submitted must <u>be at most 5MB</u>.
-            </p>
-          </div>
-          <div className="limitations_item">
-            <img className="limit_icon" src={seconds_icon} />
-            <p>
-              Desirable length of audio data submitted is{" "}
-              <u>15 seconds and below</u>.
-            </p>
-          </div>
-          <div className="limitations_item">
-            <img className="limit_icon" src={audio_icon} />
-            <p>
-              The system has <u>no control over noise and variance in volume</u>{" "}
-              that may hinder and affect its authentication.
-            </p>
-          </div>
-          <div className="limitations_item">
-            <img className="limit_icon" src={speech_icon} />
-            <p>
-              <u>Tagalog speech only</u>. The system cannot properly detect for
-              singing, and other languages.
+              Processed features are fed into a classification module that
+              determines whether the audio is genuine or a deepfake based on
+              learned patterns. RealTalk achieves an accuracy rate of 86.2%,
+              ensuring reliable detection of deepfake audio in Tagalog and
+              protecting against misinformation and fraudulent audio
+              manipulations.
             </p>
           </div>
         </div>
