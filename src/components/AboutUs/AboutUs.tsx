@@ -1,7 +1,7 @@
 import "./AboutUs.css";
 import gymuel from "./gymuel.jpg";
 import harold from "./harold.png";
-import jonas from "./jonas.jpg";
+import jonas from "./jonas.png";
 import josh from "./josh.png";
 
 export default function AboutUs() {
