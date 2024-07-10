@@ -17,6 +17,7 @@ export default function RealTalk() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
   {
     /*Checks if the uploaded file is a .wav file*/
@@ -114,6 +115,14 @@ export default function RealTalk() {
     });
   };
 
+  const handleSpectrogramGuideClick = () => {
+    setIsDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+  };
+
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.load();
@@ -170,7 +179,15 @@ export default function RealTalk() {
           </button>
         </div>
         <div className="file_reports">
-          <h1 className="file_report_title">Mel-Spectrogram Conversion</h1>
+          <div className="file_report_header">
+            <h1 className="file_report_title">Mel-Spectrogram Conversion</h1>
+            <p
+              className="spectrogram_guide"
+              onClick={handleSpectrogramGuideClick}
+            >
+              ⓘ
+            </p>
+          </div>
           <div className="spectrogram_box">
             {isLoading ? (
               <img src={gear_loading} />
@@ -194,6 +211,22 @@ export default function RealTalk() {
           </div>
         </div>
       </div>
+      {isDialogOpen && (
+        <div className="dialog_box">
+          <div className="dialog_content">
+            <span className="close_button" onClick={handleCloseDialog}>
+              &times;
+            </span>
+            <h2>What is a Mel-Spectrogram?</h2>
+            <p>
+              A mel-spectrogram is a visual representation of the spectrum of
+              frequencies in a sound signal as they vary with time. It is often
+              used in audio processing and deep learning applications to analyze
+              and classify audio data.
+            </p>
+          </div>
+        </div>
+      )}
       <div className="operation_container">
         <h1>How RealTalk Works</h1>
         <div className="operation_inner_container">
@@ -208,7 +241,7 @@ export default function RealTalk() {
             </p>
           </div>
           <div className="operation_item">
-            <h2>Vision Transformer (ViT) Application:</h2>
+            <h2>ViT Application:</h2>
             <p>
               Each spectrogram patch is treated as a token, embedded into a
               higher-dimensional space with added positional information. The
@@ -218,7 +251,7 @@ export default function RealTalk() {
             </p>
           </div>
           <div className="operation_item">
-            <h2>Feature Extraction and Analysis:</h2>
+            <h2>Feature Extraction:</h2>
             <p>
               RealTalk utilizes multiple transformer layers to analyze
               spectrogram patches, extracting detailed features and identifying
