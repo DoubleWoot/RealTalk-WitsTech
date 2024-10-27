@@ -1,7 +1,10 @@
 import librosa
+import librosa.display
 import numpy as np
 import matplotlib.pyplot as plt
 import PIL.Image as Image
+
+plt.switch_backend('Agg')
 
 def wav2melspec(fp):
     y, sr = librosa.load(fp)

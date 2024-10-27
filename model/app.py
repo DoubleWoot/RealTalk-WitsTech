@@ -1,8 +1,9 @@
 from flask import Flask, request, jsonify
+import requests
 from flask_cors import CORS
 import os
 from datetime import datetime
-import requests
+#import requests
 
 #For opening images
 from PIL import Image
@@ -12,12 +13,11 @@ from io import BytesIO
 import base64
 
 app = Flask(__name__)
-# CORS(app, resources={r"/upload": {"origins": "http://localhost:5173"}})
-CORS(app)
+CORS(app, resources={r"/upload": {"origins": "http://localhost:5173"}})
+#CORS(app)
 
-
-API_URL = "https://api-inference.huggingface.co/models/Anthuni/Final_Thesis_Model"
-headers = {"Authorization": "Bearer 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"}
+API_URL = os.getenv("API_URL")
+headers = {"Authorization": os.getenv("API_KEY")}
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATA_FOLDER = os.path.join(BASE_DIR, 'data')
@@ -45,7 +45,7 @@ def upload_file():
     if 'file' not in request.files:
         return jsonify({'error': 'No file part'}), 400
     
-    file = request.files['file']
+    file = request.files["file"]
     
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
@@ -104,8 +104,9 @@ def preprocessor(filepath):
 def model_inference(filename):
     with open(filename, "rb") as f:
         data = f.read()
-    response = requests.post(API_URL, headers=headers, data=data)
+    response = requests.post(API_URL, data=data, headers=headers)
     postresult = response.json()
+    print(response.status_code)
     
     if postresult[0]["score"] > postresult[1]["score"]:
         score = postresult[0]["score"]
